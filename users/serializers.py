@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from django.utils.translation import ugettext_lazy as _
 
+from users.models import FollowingUsers
+
 
 class UserRegistrationSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
@@ -99,3 +101,21 @@ class AuthTokenSerializer(serializers.Serializer):
 
         data['user'] = user
         return data
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    """
+        User profile serializer to check users profile.
+    """
+
+    following = serializers.SerializerMethodField()
+
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'bio', 'image', 'following']
+
+    def get_following(self, obj):
+        request = self.context.get('request')
+        return FollowingUsers.objects.is_following(
+            follower=request.user,
+            followed=obj)

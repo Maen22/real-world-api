@@ -32,9 +32,9 @@ class Comment(AuditableModel):
 
 class FavoriteArticles(AuditableModel):
     article = models.ForeignKey(
-        Article, related_name="favorites", on_delete=models.CASCADE
+        Article, related_name="favorite_by", on_delete=models.CASCADE
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="favorites", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="favorite_articles", on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (

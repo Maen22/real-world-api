@@ -88,7 +88,12 @@ class FollowManager(Manager):
             return False
 
     def is_following(self, follower, followed):
-        return self.filter(follower=follower, followed=followed).exists()
+        is_following = self.filter(follower=follower, followed=followed).exists()
+        print('------------------------------------------------------------------------')
+        print(is_following)
+        print('------------------------------------------------------------------------')
+
+        return is_following
 
 
 class FollowingUsers(AuditableModel):
