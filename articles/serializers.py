@@ -11,8 +11,6 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    created_at = serializers.SerializerMethodField(read_only=True)
-    updated_at = serializers.SerializerMethodField(read_only=True)
     favorites_count = serializers.SerializerMethodField(read_only=True)
     favorited = serializers.SerializerMethodField(read_only=True)
     tagList = serializers.ListField(child=serializers.CharField(), source="tags", read_only=True)

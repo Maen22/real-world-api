@@ -41,3 +41,6 @@ class FavoriteArticles(AuditableModel):
             "article",
             "user",
         )
+
+    def __str__(self):
+        return f'{self.user.username} - {self.article.title}'
