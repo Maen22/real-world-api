@@ -12,10 +12,3 @@ class ArticleFilter(django_filters.FilterSet):
     class Meta:
         model = Article
         fields = ['tag', 'author', 'favorite_by']
-
-    # def tag_filter(self, queryset, name, value):
-    #     lookup = '__'.join([name, 'contains'])
-    #     return queryset.filter(**{
-    #         lookup: [value],
-    #     })
-

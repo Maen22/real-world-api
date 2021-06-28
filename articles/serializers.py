@@ -18,7 +18,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        exclude = ['id']
+        exclude = ['id', 'tags']
 
     def get_created_at(self, instance):
         return instance.create_date.strftime('%B %d, %Y')
@@ -32,3 +32,11 @@ class ArticleSerializer(serializers.ModelSerializer):
     def get_favorited(self, instance):
         request = self.context.get('request')
         return instance.favorite_by.filter(user=request.user).exists()
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = UserProfileSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'create_date', 'last_updated', 'body', 'author']

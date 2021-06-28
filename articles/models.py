@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.postgres import fields
 from django.db import models
+from django.db.models import Manager
 
 from core.models import AuditableModel
 
@@ -24,6 +25,7 @@ class Comment(AuditableModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE)
     article = models.ForeignKey(Article,
+                                related_name='comments',
                                 on_delete=models.CASCADE)
 
     def __str__(self):
@@ -35,6 +37,8 @@ class FavoriteArticles(AuditableModel):
         Article, related_name="favorite_by", on_delete=models.CASCADE
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="favorite_articles", on_delete=models.CASCADE)
+
+    objects = Manager()
 
     class Meta:
         unique_together = (
